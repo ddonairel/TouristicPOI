@@ -9,7 +9,7 @@
         android:id="@+id/POIFragment"
         android:name="es.ddonaire.touristicpoi.poi.POIFragment"
         android:label="fragment_poi"
-        tools:layout="@layout/fragment_poi" >
+        tools:layout="@layout/fragment_poi">
         <action
             android:id="@+id/action_POIFragment_to_POIDetailFragment"
             app:destination="@id/POIDetailFragment" />
@@ -18,9 +18,9 @@
         android:id="@+id/POIDetailFragment"
         android:name="es.ddonaire.touristicpoi.poi.detail.POIDetailFragment"
         android:label="fragment_poi_detail"
-        tools:layout="@layout/fragment_poi_detail" >
+        tools:layout="@layout/fragment_poi_detail">
         <argument
-            android:name="id"
+            android:name="poiId"
             app:argType="integer" />
     </fragment>
 </navigation>

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import es.ddonaire.touristicpoi.R
 import es.ddonaire.touristicpoi.data.local.POIDatabase
 import es.ddonaire.touristicpoi.databinding.FragmentPoiBinding
@@ -26,7 +27,7 @@ class POIFragment : Fragment() {
         prepareViewModel()
 
         binding.rvPOIs.adapter = POIListAdapter(POIListAdapter.POIListener { poi ->
-
+            viewModel.onPOIClicked(poi.id)
         })
 
         binding.svPOI.setOnQueryTextListener(object :
@@ -46,13 +47,22 @@ class POIFragment : Fragment() {
 
         })
 
+        viewModel.navigateToPOIDetail.observe(viewLifecycleOwner) { id ->
+            id?.let {
+                findNavController().navigate(
+                    POIFragmentDirections.actionPOIFragmentToPOIDetailFragment(id)
+                )
+                viewModel.onPOIDetailNavigated()
+            }
+        }
+
         setHasOptionsMenu(true)
 
         return binding.root
 
     }
 
-    fun prepareViewModel() {
+    private fun prepareViewModel() {
         val application = requireNotNull(this.activity).application
         val dataSource = POIDatabase.getInstance(application).poiDao
         val repository = POIRepository(dataSource)

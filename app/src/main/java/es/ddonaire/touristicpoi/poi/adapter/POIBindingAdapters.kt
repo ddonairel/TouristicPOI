@@ -1,6 +1,7 @@
 package es.ddonaire.touristicpoi.poi.adapter
 
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -23,5 +24,15 @@ fun getImage(view: ImageView, src: String?) {
             .load(uri)
             .placeholder(R.drawable.baseline_image_128)
             .into(view)
+    }
+}
+
+@BindingAdapter("latlngText")
+fun bindTextViewToLatLng(textView: TextView, geoCoordinates: String?) {
+    geoCoordinates?.let {
+        val context = textView.context
+        val lat = geoCoordinates.substringBefore(",")
+        val long = geoCoordinates.substringAfter(",")
+        textView.text = String.format(context.getString(R.string.lat_long_snippet), lat, long)
     }
 }
