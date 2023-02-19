@@ -39,7 +39,7 @@ interface POIDao {
      * @return POIs that contain the input string in the title
      */
     @Query("SELECT * FROM poi_table WHERE title LIKE '%' || :title || '%'")
-    suspend fun getPOIsbyTitle(title: String): List<POI>
+    suspend fun getPOIsByTitle(title: String): List<POI>
 
     /**
      * @param id the id of the POI
