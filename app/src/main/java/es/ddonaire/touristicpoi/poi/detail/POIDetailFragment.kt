@@ -60,6 +60,9 @@ class POIDetailFragment : Fragment() {
         binding.viewModel = viewModel
     }
 
+    /**
+     * Search the POI on Google Maps
+     */
     private fun searchGeoCoordinates(poi: POI) {
         val gmmIntentUri = Uri.parse("geo:${poi.geocoordinates}?q=" + Uri.encode(poi.title))
         val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)

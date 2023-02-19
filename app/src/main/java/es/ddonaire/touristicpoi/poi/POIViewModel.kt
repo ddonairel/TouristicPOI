@@ -21,8 +21,6 @@ class POIViewModel(val repository: POIRepository): ViewModel() {
     enum class POIMenu { SORT_AZ, SORT_ZA }
 
     private val _poiSort = MutableLiveData<POIMenu>()
-    val poiSort: LiveData<POIMenu>
-        get() = _poiSort
 
     private val _navigateToPOIDetail = MutableLiveData<Int?>()
     val navigateToPOIDetail: LiveData<Int?>

@@ -18,6 +18,7 @@ private val moshi = Moshi.Builder()
 
 object POIApi {
     val retrofitService: POIApiService by lazy {
+        //Logs HTTP request and response data
         val logger = HttpLoggingInterceptor()
         logger.level = HttpLoggingInterceptor.Level.BODY
         val okHttpClient = OkHttpClient.Builder()

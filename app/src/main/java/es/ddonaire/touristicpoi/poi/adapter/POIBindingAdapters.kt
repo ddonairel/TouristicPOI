@@ -9,12 +9,18 @@ import com.bumptech.glide.Glide
 import es.ddonaire.touristicpoi.R
 import es.ddonaire.touristicpoi.data.model.POI
 
+/**
+ * Binding Adapter used to set the recycler view data
+ */
 @BindingAdapter("poiData")
 fun bindRecyclerView(recyclerView: RecyclerView, data: List<POI>?) {
     val adapter = recyclerView.adapter as POIListAdapter
     adapter.submitList(data)
 }
 
+/**
+ * Binding Adapter used to load the poi's image with Glide
+ */
 @BindingAdapter("poiImage")
 fun getImage(view: ImageView, src: String?) {
     src?.let {
@@ -27,6 +33,9 @@ fun getImage(view: ImageView, src: String?) {
     }
 }
 
+/**
+ * Binding Adapter used to format the geoCoordinates
+ */
 @BindingAdapter("latlngText")
 fun bindTextViewToLatLng(textView: TextView, geoCoordinates: String?) {
     geoCoordinates?.let {

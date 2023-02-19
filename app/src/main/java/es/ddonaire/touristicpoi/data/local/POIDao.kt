@@ -6,6 +6,9 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import es.ddonaire.touristicpoi.data.model.POI
 
+/**
+ * Data Access Object for the poi table
+ */
 @Dao
 interface POIDao {
 
