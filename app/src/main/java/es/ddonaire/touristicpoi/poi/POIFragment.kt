@@ -1,11 +1,10 @@
 package es.ddonaire.touristicpoi.poi
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import es.ddonaire.touristicpoi.R
 import es.ddonaire.touristicpoi.data.local.POIDatabase
 import es.ddonaire.touristicpoi.databinding.FragmentPoiBinding
 import es.ddonaire.touristicpoi.poi.adapter.POIListAdapter
@@ -24,6 +23,36 @@ class POIFragment : Fragment() {
         binding = FragmentPoiBinding.inflate(layoutInflater)
         binding.lifecycleOwner = viewLifecycleOwner
 
+        prepareViewModel()
+
+        binding.rvPOIs.adapter = POIListAdapter(POIListAdapter.POIListener { poi ->
+
+        })
+
+        binding.svPOI.setOnQueryTextListener(object :
+            androidx.appcompat.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(p0: String?): Boolean {
+                if (p0 != null) {
+                    viewModel.getPOIsByTitle(p0)
+                } else {
+                    viewModel.getAllPOIs()
+                }
+                return false
+            }
+
+        })
+
+        setHasOptionsMenu(true)
+
+        return binding.root
+
+    }
+
+    fun prepareViewModel() {
         val application = requireNotNull(this.activity).application
         val dataSource = POIDatabase.getInstance(application).poiDao
         val repository = POIRepository(dataSource)
@@ -32,13 +61,27 @@ class POIFragment : Fragment() {
         viewModel = ViewModelProvider(this, viewModelFactory)[POIViewModel::class.java]
 
         binding.viewModel = viewModel
+    }
 
-        binding.rvPOIs.adapter = POIListAdapter(POIListAdapter.POIListener { poi ->
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.main_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
 
-        })
-
-        return binding.root
-
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.sort_AZ -> {
+                viewModel.setSort(POIViewModel.POIMenu.SORT_AZ)
+                true
+            }
+            R.id.sort_ZA -> {
+                viewModel.setSort(POIViewModel.POIMenu.SORT_ZA)
+                true
+            }
+            else -> {
+                super.onOptionsItemSelected(item)
+            }
+        }
     }
 
 }
